@@ -20,11 +20,11 @@ Pod::Spec.new do |s|
 Image slideshow is a Swift library providing customizable image slideshow with circular scrolling, timer and full screen viewer and extendable image source (AFNetworking image source available in AFURL subspec).
                          DESC
 
-  s.homepage         = "https://github.com/zvonicek/ImageSlideshow"
+  s.homepage         = "https://github.com/czone-tech/ImageSlideshow"
   s.screenshots     = "http://cl.ly/image/2v193I0G0h0Z/ImageSlideshow2.gif"
   s.license          = 'MIT'
   s.author           = { "Petr Zvonicek" => "zvonicek@gmail.com" }
-  s.source           = { :git => "https://github.com/zvonicek/ImageSlideshow.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/czone-tech/ImageSlideshow", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/zvonicek'
 
   s.swift_versions = ['4.0', '4.1', '4.2', '5', '5.1']
