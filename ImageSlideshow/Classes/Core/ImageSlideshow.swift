@@ -1,9 +1,4 @@
-//
-//  ImageSlideshow.swift
-//  ImageSlideshow
-//
-//  Created by Petr Zvoníček on 30.07.15.
-//
+
 
 import UIKit
 
@@ -294,13 +289,13 @@ open class ImageSlideshow: UIView {
         let scrollViewBottomPadding = pageIndicatorViewSize.flatMap { pageIndicatorPosition.underPadding(for: $0) } ?? 0
 
         scrollView.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height - scrollViewBottomPadding)
-        scrollView.contentSize = CGSize(width: scrollView.frame.size.width * CGFloat(scrollViewImages.count), height: scrollView.frame.size.height)
+        scrollView.contentSize = CGSize(width: scrollView.frame.size.width , height: scrollView.frame.size.height * CGFloat(scrollViewImages.count))
 
         for (index, view) in slideshowItems.enumerated() {
             if !view.zoomInInitially {
                 view.zoomOut()
             }
-            view.frame = CGRect(x: scrollView.frame.size.width * CGFloat(index), y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height)
+            view.frame = CGRect(x: 0, y: scrollView.frame.size.height * CGFloat(index), width: scrollView.frame.size.width, height: scrollView.frame.size.height)
         }
 
         setScrollViewPage(scrollViewPage, animated: false)
@@ -325,7 +320,7 @@ open class ImageSlideshow: UIView {
 
         if circular && (scrollViewImages.count > 1) {
             scrollViewPage = 1
-            scrollView.scrollRectToVisible(CGRect(x: scrollView.frame.size.width, y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height), animated: false)
+            scrollView.scrollRectToVisible(CGRect(x: 0, y: scrollView.frame.size.height, width: scrollView.frame.size.width, height: scrollView.frame.size.height), animated: false)
         } else {
             scrollViewPage = 0
         }
@@ -408,7 +403,7 @@ open class ImageSlideshow: UIView {
      */
     open func setScrollViewPage(_ newScrollViewPage: Int, animated: Bool) {
         if scrollViewPage < scrollViewImages.count {
-            scrollView.scrollRectToVisible(CGRect(x: scrollView.frame.size.width * CGFloat(newScrollViewPage), y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height), animated: animated)
+            scrollView.scrollRectToVisible(CGRect(x: 0, y: scrollView.frame.size.height * CGFloat(newScrollViewPage), width: scrollView.frame.size.width, height: scrollView.frame.size.height), animated: animated)
             setCurrentPageForScrollViewPage(newScrollViewPage)
             if animated {
                 isAnimating = true
@@ -423,7 +418,7 @@ open class ImageSlideshow: UIView {
     }
 
     @objc func slideshowTick(_ timer: Timer) {
-        let page = scrollView.frame.size.width > 0 ? Int(scrollView.contentOffset.x / scrollView.frame.size.width) : 0
+        let page = scrollView.frame.size.height > 0 ? Int(scrollView.contentOffset.y / scrollView.frame.size.height) : 0
         var nextPage = page + 1
 
         if !circular && page == scrollViewImages.count - 1 {
@@ -570,13 +565,13 @@ extension ImageSlideshow: UIScrollViewDelegate {
     }
 
     open func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if circular && (scrollViewImages.count > 1) {
-            let regularContentOffset = scrollView.frame.size.width * CGFloat(images.count)
+        if circular {
+            let regularContentOffset = scrollView.frame.size.height * CGFloat(images.count)
 
-            if scrollView.contentOffset.x >= scrollView.frame.size.width * CGFloat(images.count + 1) {
-                scrollView.contentOffset = CGPoint(x: scrollView.contentOffset.x - regularContentOffset, y: 0)
-            } else if scrollView.contentOffset.x <= 0 {
-                scrollView.contentOffset = CGPoint(x: scrollView.contentOffset.x + regularContentOffset, y: 0)
+            if scrollView.contentOffset.y >= scrollView.frame.size.height * CGFloat(images.count + 1) {
+                scrollView.contentOffset = CGPoint(x: 0, y: scrollView.contentOffset.y - regularContentOffset)
+            } else if scrollView.contentOffset.y <= 0 {
+                scrollView.contentOffset = CGPoint(x: 0, y: scrollView.contentOffset.y + regularContentOffset)
             }
         }
 
