@@ -206,7 +206,7 @@ open class ImageSlideshow: UIView {
     open fileprivate(set) var slideshowTransitioningDelegate: ZoomAnimatedTransitioningDelegate?
     
     var primaryVisiblePage: Int {
-        return scrollView.frame.size.width > 0 ? Int(scrollView.contentOffset.x + scrollView.frame.size.width / 2) / Int(scrollView.frame.size.width) : 0
+        return scrollView.frame.size.height > 0 ? Int(scrollView.contentOffset.y + scrollView.frame.size.height / 2) / Int(scrollView.frame.size.height) : 0
     }
 
     // MARK: - Life cycle
